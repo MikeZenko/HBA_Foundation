@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pathways to Global Learning: An Interactive Scholarship Guide</title>
+    <link rel="icon" type="image/x-icon" href="public/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css?v=1750385251">
+    <style>
+        /* Passcode Protection Overlay - Modern Design */
+        #passcode-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #F3F4F6;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        
+        .passcode-container {
+            background: #FFFFFF;
+            padding: 3rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            border: 1px solid #E5E7EB;
+        }
+        
+        .passcode-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+        
+        .passcode-subtitle {
+            color: #6B7280;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        .passcode-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid #E5E7EB;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .passcode-input:focus {
+            outline: none;
+            border-color: #2D5734;
+            box-shadow: 0 0 0 3px rgba(45, 87, 52, 0.1);
+            background: rgba(255, 255, 255, 1);
+        }
+        
+        .passcode-button {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: #3A5A40;
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .passcode-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .passcode-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(45, 87, 52, 0.3);
+        }
+        
+        .passcode-button:hover::before {
+            left: 100%;
+        }
+        
+        .passcode-error {
+            color: #DC2626;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+            font-weight: 500;
+            background: rgba(239, 68, 68, 0.1);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Passcode Protection Overlay -->
+    <div id="passcode-overlay">
+        <div class="passcode-container">
+            <h2 class="passcode-title">HBA Foundation</h2>
+            <p class="passcode-subtitle">Please enter the access code to continue</p>
+            <input type="password" id="passcode-input" class="passcode-input" placeholder="Enter passcode" autocomplete="off">
+            <button id="passcode-submit" class="passcode-button">Access Website</button>
+            <div id="passcode-error" class="passcode-error">Incorrect passcode. Please try again.</div>
+        </div>
+    </div>
+
+    <div id="app" class="min-h-screen" style="display: none;">
+
+        <nav>
+            <div class="container nav-container">
+                <a href="#welcome" data-section="welcome" class="brand">HBA Foundation</a>
+                <div class="nav-links">
+                    <a href="#welcome" class="nav-link active" data-section="welcome">Welcome</a>
+                    <a href="#explorer" class="nav-link" data-section="explorer">Scholarship Explorer</a>
+                    <a href="#guide" class="nav-link" data-section="guide">Application Guide</a>
+                    <a href="#contribute" class="nav-link" data-section="contribute">Contribute</a>
+                    <a href="/admin" class="nav-link">Admin</a>
+                </div>
+            </div>
+        </nav>
+
+        <header class="mb-8 py-10">
+            <div class="container mx-auto px-4">
+                <div class="max-w-3xl">
+                    <h1 class="font-extrabold mb-2">HBA Foundation</h1>
+                    <p class="text-gray-600">
+                        Pathways to Global Learning — a curated, interactive guide to scholarships and opportunities for Afghan students.
+                    </p>
+                    <div class="flex items-center gap-3 mt-6">
+                        <a href="#explorer" data-section="explorer" class="btn btn-primary">Explore Scholarships</a>
+                        <a href="#contribute" data-section="contribute" class="btn btn-secondary">Contribute an Opportunity</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <section id="welcome" class="welcome-section py-10">
+                <div class="container mx-auto px-4">
+                    <div class="mb-4">
+                        <h2 class="font-bold">Welcome</h2>
+                    </div>
+                    <div class="max-w-3xl space-y-4">
+                        <p class="text-gray-700 leading-relaxed">
+                            The pursuit of education is a journey of empowerment and hope. In the face of challenges, your desire for learning remains a powerful force. This guide is a beacon of support, designed to illuminate potential pathways to international higher education.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed">
+                            While the journey may seem complex, opportunities exist. With research, preparation, and determination, you can continue to strive for your academic dreams on a global stage. This interactive tool is your starting point—use it to explore, plan, and take the next step in your courageous pursuit of knowledge.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="explorer" class="hidden py-10">
+                <div class="container mx-auto px-4">
+                    <div class="mb-4">
+                        <h2 class="font-bold">Scholarship Explorer</h2>
+                        <p class="max-w-3xl text-gray-700">Use the filters below to discover scholarships that match your goals. Click on any card to see detailed information.</p>
+                    </div>
+                
+                <div class="filter-container">
+                    <div class="mb-6">
+                        <label for="search-scholarships">Search Scholarships</label>
+                        <input type="search" id="search-scholarships" placeholder="Search by scholarship name or organization...">
+                    </div>
+                    <div class="filter-grid">
+                        <div class="filter-group">
+                            <label for="filter-mode">Study Mode</label>
+                            <select id="filter-mode">
+                                <option value="all">All</option>
+                                <option value="Online">Online</option>
+                                <option value="In-Person">In-Person</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-region">Region</label>
+                            <select id="filter-region">
+                                <option value="all">All</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-level">Level of Study</label>
+                            <select id="filter-level">
+                                <option value="all">All</option>
+                                <option value="Bachelor's">Bachelor's</option>
+                                <option value="High School">High School</option>
+                                <option value="All levels">All levels</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="filter-funding">Funding</label>
+                            <select id="filter-funding">
+                                <option value="all">All</option>
+                                <option value="Yes">Fully Funded</option>
+                                <option value="Partial">Partially Funded</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="scholarship-count" class="text-center text-gray-600 mb-8 font-medium"></div>
+
+                    <div id="scholarship-grid" class="scholarship-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                    <div id="no-results" class="hidden text-center py-16">
+                        <p class="text-xl text-gray-500">No scholarships match your current filters.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="guide" class="hidden py-8">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold mb-3">Your Application Guide</h2>
+                        <p class="max-w-3xl mx-auto text-gray-700 px-4">Securing a scholarship requires preparation. This guide breaks down the key steps and terms to help you build a strong application.</p>
+                    </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2">
+                        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 mb-8">
+                            <h3 class="text-2xl font-bold heading-accent mb-4">Application Checklist</h3>
+                            <p class="text-gray-600 mb-6">Use this interactive checklist to track your progress. Preparing these items in advance will streamline your application process.</p>
+                            <div id="checklist" class="space-y-4"></div>
+                        </div>
+                         <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                            <h3 class="text-2xl font-bold heading-accent mb-4">Key Challenges to Consider</h3>
+                             <div class="space-y-4">
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800">The "Return to Home Country" Clause</h4>
+                                    <p class="text-gray-600">Many scholarships (like Chevening or DAAD) require you to return home for a period after your studies. Given the current situation in Afghanistan, this is a complex issue. You must carefully consider this requirement and, if possible, seek clarification from the scholarship provider about its flexibility or potential waivers.</p>
+                                </div>
+                                 <div>
+                                    <h4 class="font-bold text-lg text-gray-800">Concurrent University Applications</h4>
+                                    <p class="text-gray-600">Several top scholarships (e.g., Chevening) require you to apply for and receive an unconditional offer from a university *separately*. This means you are managing two demanding application processes at once. Start early and be extremely organized.</p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-lg text-gray-800">Upfront Costs</h4>
+                                    <p class="text-gray-600">Even for "fully funded" scholarships, you may need to pay for English tests (TOEFL/IELTS), university application fees, and document translation/certification yourself. Research fee waivers, but be prepared for these initial expenses.</p>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                    <div class="lg:col-span-1">
+                        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 mb-8">
+                            <h3 class="text-2xl font-bold heading-accent mb-4">Scholarship Landscape</h3>
+                            <p class="text-gray-600 mb-4">This chart shows the distribution of the scholarships in this guide by region, helping you see where opportunities are concentrated.</p>
+                            <div class="chart-container">
+                                <canvas id="regionChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+                             <h3 class="text-2xl font-bold heading-accent mb-4">Understanding Key Terms</h3>
+                             <div id="key-terms" class="space-y-3"></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="contribute" class="hidden py-8">
+                <div class="container mx-auto px-4">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl font-bold mb-3">Share a Scholarship</h2>
+                        <p class="text-gray-700 max-w-3xl mx-auto px-4">
+                            Know of a scholarship opportunity not listed here? Help others by sharing it with our community!
+                        </p>
+                    </div>
+                    
+                    <!-- Success/Error Messages Container -->
+                    <div id="submissionResult" class="max-w-3xl mx-auto mb-8 hidden"></div>
+                    
+                    <form id="contributionForm" class="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8">
+                        <div>
+                            <label for="scholarshipName" class="block text-sm font-medium text-gray-700 mb-1">Scholarship Name</label>
+                            <input type="text" id="scholarshipName" name="scholarshipName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                        </div>
+                        <div>
+                            <label for="organization" class="block text-sm font-medium text-gray-700 mb-1">Organization</label>
+                            <input type="text" id="organization" name="organization" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                        </div>
+                        <div>
+                            <label for="scholarshipWebsite" class="block text-sm font-medium text-gray-700 mb-1">Website URL</label>
+                            <input type="url" id="scholarshipWebsite" name="scholarshipWebsite" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                        </div>
+                        <div>
+                            <label for="studyLevel" class="block text-sm font-medium text-gray-700 mb-1">Level of Study</label>
+                            <select id="studyLevel" name="studyLevel" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                                <option value="">Select level</option>
+                                <option value="Bachelor's">Bachelor's</option>
+                                <option value="High School">High School</option>
+                                <option value="All levels">All levels</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="hostCountry" class="block text-sm font-medium text-gray-700 mb-1">Host Country</label>
+                            <input type="text" id="hostCountry" name="hostCountry" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                        </div>
+                        <div>
+                            <label for="targetGroup" class="block text-sm font-medium text-gray-700 mb-1">Target Group</label>
+                            <input type="text" id="targetGroup" name="targetGroup" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                        </div>
+                        <div>
+                            <label for="deadline" class="block text-sm font-medium text-gray-700 mb-1">Application Deadline</label>
+                            <input type="text" id="deadline" name="deadline" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                        </div>
+                        <div>
+                            <label for="fundingType" class="block text-sm font-medium text-gray-700 mb-1">Funding Type</label>
+                            <select id="fundingType" name="fundingType" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                                <option value="">Select type</option>
+                                <option value="Yes">Full Funding</option>
+                                <option value="Partial">Partial Funding</option>
+                                <option value="No">No Funding</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="fundingDetails" class="block text-sm font-medium text-gray-700 mb-1">Funding Details</label>
+                            <textarea id="fundingDetails" name="fundingDetails" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]"></textarea>
+                        </div>
+                        <div>
+                            <label for="eligibility" class="block text-sm font-medium text-gray-700 mb-1">Eligibility Requirements</label>
+                            <textarea id="eligibility" name="eligibility" rows="3" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]"></textarea>
+                        </div>
+                        <div>
+                            <label for="applicationProcess" class="block text-sm font-medium text-gray-700 mb-1">Application Process</label>
+                            <textarea id="applicationProcess" name="applicationProcess" rows="3" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]"></textarea>
+                        </div>
+                        <div>
+                            <label for="additionalNotes" class="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
+                            <textarea id="additionalNotes" name="additionalNotes" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]"></textarea>
+                        </div>
+                        <div>
+                            <label for="submitterName" class="block text-sm font-medium text-gray-700 mb-1">Your Name</label>
+                            <input type="text" id="submitterName" name="submitterName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                        </div>
+                        <div>
+                            <label for="submitterEmail" class="block text-sm font-medium text-gray-700 mb-1">Your Email</label>
+                            <input type="email" id="submitterEmail" name="submitterEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#3A5A40]">
+                        </div>
+                        <div class="mt-6">
+                            <button type="submit" class="w-full bg-[#3A5A40] text-white py-2 px-4 rounded-md hover:bg-[#2F4D35] transition-colors duration-300">Submit Scholarship</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal" class="modal-overlay fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden opacity-0">
+        <div id="modal-content" class="modal-content bg-white w-full max-w-3xl max-h-[90vh] rounded-2xl shadow-2xl transform scale-95">
+            <div class="p-6 md:p-8 border-b flex justify-between items-start">
+                <div>
+                    <h3 id="modal-title" class="text-2xl font-bold heading-accent"></h3>
+                    <p id="modal-organization" class="text-gray-500"></p>
+                </div>
+                <button id="modal-close" class="text-gray-400 hover:text-gray-800 transition-colors">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-160px)]">
+                <div id="modal-body" class="space-y-6"></div>
+            </div>
+            <div class="p-6 bg-gray-50 rounded-b-2xl flex justify-end">
+                 <a id="modal-link" href="#" target="_blank" rel="noopener noreferrer" class="bg-[#008080] hover:bg-[#006666] text-white font-bold py-2 px-6 rounded-lg transition-colors">Visit Official Website</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 border-t border-gray-200 py-10 mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold heading-accent">HBA Foundation</h3>
+                    <p class="text-gray-600 mt-1">Empowering students through educational opportunities</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 link-accent transition-colors">
+                        <span class="sr-only">Facebook</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-500 link-accent transition-colors">
+                        <span class="sr-only">Twitter</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                        </svg>
+                    </a>
+                    <a href="#" class="text-gray-500 link-accent transition-colors">
+                        <span class="sr-only">Instagram</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-200 pt-8 md:flex md:items-center md:justify-between">
+                <div class="flex space-x-6 md:order-2">
+                    <a href="#" class="text-gray-500 link-accent">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 link-accent">Terms of Service</a>
+                    <a href="#" class="text-gray-500 link-accent">Contact Us</a>
+                </div>
+                <p class="mt-8 text-base text-gray-500 md:mt-0 md:order-1">
+                    &copy; 2023 HBA Foundation. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="navigation.js"></script>
+    <script>
+        // Passcode Protection System
+        document.addEventListener('DOMContentLoaded', function() {
+            const CORRECT_PASSCODE = 'per ardua';
+            const passcodeOverlay = document.getElementById('passcode-overlay');
+            const passcodeInput = document.getElementById('passcode-input');
+            const passcodeSubmit = document.getElementById('passcode-submit');
+            const passcodeError = document.getElementById('passcode-error');
+            const appContainer = document.getElementById('app');
+            
+            // Check if user has already entered correct passcode in this session
+            const hasAccess = sessionStorage.getItem('hba-access') === 'granted';
+            
+            if (hasAccess) {
+                // User already has access, show the main content
+                passcodeOverlay.style.display = 'none';
+                appContainer.style.display = 'block';
+            } else {
+                // Focus on the input field
+                passcodeInput.focus();
+            }
+            
+            function checkPasscode() {
+                const enteredPasscode = passcodeInput.value.trim().toLowerCase();
+                
+                if (enteredPasscode === CORRECT_PASSCODE) {
+                    // Correct passcode
+                    sessionStorage.setItem('hba-access', 'granted');
+                    passcodeOverlay.style.display = 'none';
+                    appContainer.style.display = 'block';
+                    passcodeError.style.display = 'none';
+                    
+                    // Initialize the application
+                    if (typeof initializeSections === 'function') {
+                        initializeSections();
+                    }
+                } else {
+                    // Incorrect passcode
+                    passcodeError.style.display = 'block';
+                    passcodeInput.value = '';
+                    passcodeInput.focus();
+                    
+                    // Add shake animation
+                    passcodeInput.style.animation = 'shake 0.5s';
+                    setTimeout(() => {
+                        passcodeInput.style.animation = '';
+                    }, 500);
+                }
+            }
+            
+            // Handle form submission
+            passcodeSubmit.addEventListener('click', checkPasscode);
+            
+            // Handle Enter key press
+            passcodeInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkPasscode();
+                }
+            });
+            
+            // Hide error message when user starts typing
+            passcodeInput.addEventListener('input', function() {
+                passcodeError.style.display = 'none';
+            });
+        });
+        
+        // Check if initializeSections function exists, if not define it
+        if (typeof initializeSections !== 'function') {
+            function initializeSections() {
+                console.log('Initialize sections fallback function called');
+                // This is a fallback function in case the original is missing
+                const navLinks = document.querySelectorAll('.nav-link');
+                const sections = document.querySelectorAll('main > section');
+                
+                // Show the welcome section by default
+                if (sections.length > 0) {
+                    sections[0].classList.remove('hidden');
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* Add shake animation for incorrect passcode */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+        }
+    </style>
+</body>
+</html> 

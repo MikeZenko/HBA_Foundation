@@ -1,0 +1,136 @@
+[
+  {
+    "id": 1,
+    "name": "University of the People Afghan Women\"s Fund",
+    "organization": "University of the People (UoPeople)",
+    "hostCountry": "Online",
+    "region": "Online",
+    "targetGroup": "Afghan Women",
+    "level": [
+      "Bachelor\"s"
+    ],
+    "deadline": "Ongoing (apply for admission first)",
+    "funding": "Yes",
+    "fundingDetails": "Full tuition coverage. UoPeople is tuition-free but has assessment fees per course, which this scholarship covers.",
+    "returnHome": "No",
+    "website": "https://www.uopeople.edu/tuition-free/our-scholarships/afghan-womens-scholarship-fund/",
+    "notes": "This is a highly accessible option as it is online and specifically targets Afghan women. The key is to first secure admission to UoPeople.",
+    "eligibility": "Must be a female Afghan citizen, demonstrate financial need, and gain admission to UoPeople.",
+    "applicationProcess": "1. Apply for admission to UoPeople. 2. Once accepted, request the scholarship via the student portal."
+  },
+  {
+    "id": 2,
+    "name": "L.E.A.R.N. Initiative",
+    "organization": "Embrace Relief",
+    "hostCountry": "Online",
+    "region": "Online",
+    "targetGroup": "Afghan Girls",
+    "level": [
+      "High School",
+      "Bachelor\"s"
+    ],
+    "deadline": "Currently Accepting Applications",
+    "funding": "Partial",
+    "fundingDetails": "Provides financial aid covering at minimum tuition. \"Full Support\" options can include internet, materials, and mentorship.",
+    "returnHome": "No",
+    "website": "https://www.embracerelief.org/l-e-a-r-n-initiative-empowering-afghan-girls-through-education/",
+    "notes": "Offers a structured pathway from high school (GED) to a Bachelor\"s degree online. The \"full support\" option is particularly valuable.",
+    "eligibility": "Afghan girls eligible for high school (grades 10-12) or Bachelor\"s studies. An interview is part of the selection process.",
+    "applicationProcess": "Complete the online application via the Embrace Relief website and participate in an interview if shortlisted."
+  },
+  {
+    "id": 3,
+    "name": "Shafia Fund – Right to Learn",
+    "organization": "Right to Learn Afghanistan",
+    "hostCountry": "Canada (Administered)",
+    "region": "North America",
+    "targetGroup": "Afghan Women/Girls (in Afghanistan & region)",
+    "level": [
+      "Bachelor\"s"
+    ],
+    "deadline": "Check website",
+    "funding": "Partial",
+    "fundingDetails": "Up to 47,000 AFN for education expenses like tuition, transport, books, devices. Prioritizes most urgent needs.",
+    "returnHome": "No",
+    "website": "https://righttolearn.ca/programs/",
+    "notes": "Highly relevant due to its flexibility, supporting students within Afghanistan and the surrounding region. The \"in the region\" eligibility is a significant advantage.",
+    "eligibility": "Afghan women and girls of any age, accepted or enrolled in an educational program. Can apply once a year.",
+    "applicationProcess": "Submit the application via the designated Google Form on their website. Shortlisted applicants will be interviewed."
+  },
+  {
+    "id": 8,
+    "name": "Qatar Scholarship for Afghans Project (QSAP)",
+    "organization": "IIE, Education Above All, Qatar Fund for Development",
+    "hostCountry": "USA",
+    "region": "North America",
+    "targetGroup": "Displaced Afghan Students (esp. at-risk, women)",
+    "level": [
+      "Bachelor\"s"
+    ],
+    "deadline": "Managed by IIE (specific intake cycles)",
+    "funding": "Yes",
+    "fundingDetails": "Full scholarship for study at approximately 50 partner colleges and universities in the United States.",
+    "returnHome": "No",
+    "website": "https://www.iie.org/news/qsap-welcomes-100-new-refugee-students-to-us-colleges/",
+    "notes": "A major and highly relevant initiative. Focuses on Afghans who were at risk, with 50% of scholarships for women. Opportunity is for study in the US.",
+    "eligibility": "Displaced Afghan students. Selection is managed through IIE and its partners.",
+    "applicationProcess": "The program is managed by the Institute of International Education (IIE). Check the IIE website for information on new application cycles."
+  },
+  {
+    "id": 9,
+    "name": "University of Toronto At-Risk Awards",
+    "organization": "University of Toronto",
+    "hostCountry": "Canada",
+    "region": "North America",
+    "targetGroup": "Students impacted by conflict (incl. Afghans)",
+    "level": [
+      "Bachelor\"s"
+    ],
+    "deadline": "Varies (e.g., Jan 15, Feb 28)",
+    "funding": "Partial",
+    "fundingDetails": "Non-repayable bursary support up to $10,000 CAD to assist with educational costs.",
+    "returnHome": "No",
+    "website": "https://future.utoronto.ca/finances/scholarships/",
+    "notes": "This is not a full scholarship but a bursary to help with costs for students already admitted or applying to U of T.",
+    "eligibility": "Undergraduate students at U of T whose education has been disrupted by conflict or war, including those from Afghanistan. Must demonstrate financial need.",
+    "applicationProcess": "Apply through the University of Toronto\"s financial aid system after being admitted."
+  },
+  {
+    "id": 10,
+    "name": "Türkiye Bursları",
+    "organization": "Turkish Government",
+    "hostCountry": "Turkey",
+    "region": "Asia",
+    "targetGroup": "International Students",
+    "level": [
+      "Bachelor\"s"
+    ],
+    "deadline": "Jan 10 - Feb 20",
+    "funding": "Yes",
+    "fundingDetails": "Tuition, monthly stipend, round-trip travel, health insurance, accommodation, and a mandatory one-year Turkish language course.",
+    "returnHome": "No",
+    "website": "https://www.turkiyeburslari.gov.tr/",
+    "notes": "A very comprehensive scholarship. The mandatory Turkish language course is a key feature, as many programs are taught in Turkish.",
+    "eligibility": "Non-Turkish citizens meeting age limits (e.g., under 21 for undergrad) and academic merit requirements (e.g., 70-75% min grades).",
+    "applicationProcess": "Apply online via the Türkiye Bursları website. The process includes document evaluation and an interview for shortlisted candidates."
+  },
+  {
+    "id": 11,
+    "name": "KNB Scholarship",
+    "organization": "Indonesian Government",
+    "hostCountry": "Indonesia",
+    "region": "Asia",
+    "targetGroup": "Students from Developing Countries",
+    "level": [
+      "Bachelor\"s"
+    ],
+    "deadline": "Annually (~Feb-March)",
+    "funding": "Yes",
+    "fundingDetails": "Settlement allowance, monthly living allowances, research/book allowances, health insurance, and round-trip airfare.",
+    "returnHome": "No",
+    "website": "http://knb.kemdikbud.go.id/",
+    "notes": "Requires a recommendation letter from the Indonesian Embassy in your country of residence, which is a crucial step.",
+    "eligibility": "Citizen of a developing country, meet age limits, and prove English proficiency (e.g., IELTS 5.5).",
+    "applicationProcess": "Obtain a recommendation letter from the Indonesian Embassy, then apply online through the KNB portal."
+  }
+]
