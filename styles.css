@@ -857,3 +857,16 @@ html.dark .icon { color: #94A3B8; }
 
 /* ===== DARK MODE OVERRIDES ===== */
 /* Intentionally leaving light theme only */
+
+/* Share a Scholarship form enhancements */
+#contribute .text-center.mb-8 { margin-bottom: 2.5rem; }
+#contributionForm { border: 1px solid var(--gray-200); border-radius: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.06); padding: 2rem; background: var(--surface-gradient); }
+#contributionForm > div { margin-bottom: 1rem; }
+#contributionForm label { font-weight: 600; color: #374151; }
+#contributionForm input, #contributionForm select, #contributionForm textarea { background: #FFFFFF; }
+#contributionForm textarea { min-height: 140px; }
+#submissionResult { margin-bottom: 1.5rem; }
+
+/* Improve footer spacing */
+footer .container > div:first-child { align-items: center; }
+footer .mt-8 { margin-top: 1.5rem; }

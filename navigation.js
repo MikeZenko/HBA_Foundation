@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // Trigger chart animation when entering guide section
             if (sectionId === 'guide' && typeof window.triggerGuideChart === 'function') {
-                try { window.triggerGuideChart(); } catch (_) {}
+                try { setTimeout(() => window.triggerGuideChart(), 50); } catch (_) {}
             }
             
             // Update URL hash without triggering scroll
