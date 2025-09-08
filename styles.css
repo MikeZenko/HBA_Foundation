@@ -139,14 +139,14 @@ html.dark nav { background: #0F1318; border-bottom: 1px solid rgba(255,255,255,0
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 0;
+    padding: 1.25rem 0;
     max-width: 1200px;
     margin: 0 auto;
     padding-left: 1.5rem;
     padding-right: 1.5rem;
 }
 
-.brand { font-weight: 700; font-size: 1.125rem; color: #111827; text-decoration: none; }
+.brand { font-weight: 700; font-size: 1.25rem; color: #111827; text-decoration: none; }
 html.dark .brand { color: #E5E7EB; }
 
 .nav-links {
@@ -159,9 +159,9 @@ html.dark .brand { color: #E5E7EB; }
     position: relative;
     color: var(--gray-600);
     text-decoration: none;
-    padding: 0.875rem 1rem;
-    font-weight: 500;
-    font-size: 0.95rem;
+    padding: 1rem 1rem;
+    font-weight: 600;
+    font-size: 1rem;
     transition: var(--transition-normal);
 }
 

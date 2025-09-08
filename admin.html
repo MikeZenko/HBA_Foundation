@@ -5,33 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel - HBA Foundation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        // Early theme apply to avoid FOUC
-        (function(){
-            try{
-                const stored = localStorage.getItem('theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const theme = stored || 'dark';
-                if (theme === 'dark' || (!stored && prefersDark)) document.documentElement.classList.add('dark');
-                else document.documentElement.classList.remove('dark');
-            }catch(_){ }
-        })();
-        tailwind.config = { darkMode: 'class' };
-    </script>
     <link rel="stylesheet" href="public/css/styles.css">
-    <style>
-      /* Minimal admin dark styles to complement existing CSS */
-      html.dark body { background-color: #0F172A; color: #E5E7EB; }
-      html.dark .bg-white { background-color: rgba(17,24,39,0.9) !important; }
-      html.dark .text-gray-600 { color: #CBD5E1 !important; }
-      html.dark .text-gray-500 { color: #94A3B8 !important; }
-      html.dark input, html.dark select, html.dark textarea {
-        background-color: rgba(2,6,23,0.7) !important;
-        color: #E5E7EB !important;
-        border-color: rgba(255,255,255,0.12) !important;
-      }
-      html.dark .border-gray-300 { border-color: rgba(255,255,255,0.12) !important; }
-    </style>
 </head>
 <body class="antialiased bg-gray-50">
     <!-- Login Modal -->
@@ -62,9 +36,6 @@
                 <p class="text-gray-600">Manage scholarship contributions</p>
             </div>
             <div class="flex space-x-4">
-                <button id="theme-toggle" class="px-4 py-2 rounded border border-transparent hover:border-gray-300 dark:hover:border-gray-600 transition-colors" title="Toggle theme" aria-label="Toggle theme">
-                    <span id="theme-toggle-icon">🌙</span>
-                </button>
                 <button id="logout-btn" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
                     Logout
                 </button>
@@ -89,7 +60,6 @@
         </main>
     </div>
 
-    <script src="public/js/theme.js"></script>
     <script src="public/js/admin.js"></script>
 </body>
 </html>

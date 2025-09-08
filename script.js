@@ -463,7 +463,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     let regionChartInstance = null;
-    function createRegionChart() {
+    function createRegionChart(withAnimation = false) {
         const canvas = document.getElementById('regionChart');
         if (!canvas) return;
         const ctx = canvas.getContext('2d');
@@ -479,11 +479,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         const legendColor = isDark ? '#E5E7EB' : '#1F2937';
         const ringColors = isDark
           ? [
-              'rgba(16, 185, 129, 0.9)',  // emerald
-              'rgba(99, 102, 241, 0.85)', // indigo
-              'rgba(245, 158, 11, 0.9)',  // amber
-              'rgba(168, 162, 158, 0.9)', // stone
-              'rgba(59, 130, 246, 0.85)'  // blue
+              'rgba(16, 185, 129, 0.9)',
+              'rgba(99, 102, 241, 0.85)',
+              'rgba(245, 158, 11, 0.9)',
+              'rgba(168, 162, 158, 0.9)',
+              'rgba(59, 130, 246, 0.85)'
             ]
           : [
               'rgba(16, 185, 129, 0.8)',
@@ -513,6 +513,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: withAnimation,
+                rotation: 0,
                 plugins: {
                     legend: {
                         position: 'bottom',
@@ -525,9 +527,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        // Ensure canvas blends with container
         canvas.style.backgroundColor = 'transparent';
     }
+
+    // expose a trigger for navigation to animate chart on demand
+    window.triggerGuideChart = () => createRegionChart(true);
 
     // Initialize modal first
     initializeModal();
@@ -625,7 +629,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     filterData();
     populateChecklist();
     populateKeyTerms();
-    createRegionChart();
+    createRegionChart(false);
 
     // Re-render chart on theme change
     document.addEventListener('themechange', () => {

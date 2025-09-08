@@ -20,6 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
             section.classList.add('hidden');
         });
         
+        // Toggle hero header visibility based on section
+        const heroHeader = document.querySelector('header');
+        if (heroHeader) {
+            if (sectionId === 'welcome') heroHeader.classList.remove('hidden');
+            else heroHeader.classList.add('hidden');
+        }
+        
         // Show the selected section
         const targetSection = document.getElementById(sectionId);
         if (targetSection) {
@@ -36,6 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     link.classList.remove('active');
                 }
             });
+            
+            // Trigger chart animation when entering guide section
+            if (sectionId === 'guide' && typeof window.triggerGuideChart === 'function') {
+                try { window.triggerGuideChart(); } catch (_) {}
+            }
             
             // Update URL hash without triggering scroll
             history.replaceState(null, null, '#' + sectionId);
