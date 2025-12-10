@@ -68,17 +68,14 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
           {/* Logo and branding */}
           <div className="text-center mb-8">
             <div className="flex justify-center mb-6">
-              <div className="relative">
-                <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl scale-150" />
-                <Image 
-                  src="/hba-logo.png" 
-                  alt="High Bluff Academy Foundation" 
-                  width={80} 
-                  height={80}
-                  className="relative rounded-full shadow-lg"
-                  priority
-                />
-              </div>
+              <Image 
+                src="/hba-logo.png" 
+                alt="High Bluff Academy Foundation" 
+                width={80} 
+                height={80}
+                className="rounded-full"
+                priority
+              />
             </div>
             <h1 className="text-2xl md:text-3xl font-bold text-foreground tracking-tight mb-2">
               High Bluff Academy Foundation
@@ -150,10 +147,6 @@ export function PasswordGate({ children }: { children: React.ReactNode }) {
             </form>
           </div>
 
-          {/* Footer note */}
-          <p className="text-center text-xs text-muted-foreground/60 mt-6">
-            This site contains curated scholarship information for Afghan students
-          </p>
         </div>
       </div>
     );
