@@ -242,11 +242,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     label: 'Scholarships by Region',
                     data: data,
                     backgroundColor: [
-                        'rgba(0, 128, 128, 0.7)', // Teal
-                        'rgba(58, 90, 64, 0.7)',  // Dark Green
-                        'rgba(122, 122, 102, 0.7)',// Grayish
-                        'rgba(190, 140, 99, 0.7)', // Brown
-                        'rgba(238, 204, 138, 0.7)'  // Light Brown
+                        'rgba(0, 128, 128, 0.7)',
+                        'rgba(58, 90, 64, 0.7)',
+                        'rgba(122, 122, 102, 0.7)',
+                        'rgba(190, 140, 99, 0.7)',
+                        'rgba(238, 204, 138, 0.7)'
                     ],
                     borderColor: '#FDFBF8',
                     borderWidth: 3
@@ -255,6 +255,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                animation: false,
+                rotation: 0,
                 plugins: {
                     legend: {
                         position: 'bottom',

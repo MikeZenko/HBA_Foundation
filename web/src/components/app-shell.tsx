@@ -7,22 +7,25 @@ import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, C
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { useState, useEffect } from "react";
 import { scholarships } from "@/lib/data";
+import { PasswordGate } from "@/components/password-gate";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-dvh flex flex-col bg-background text-foreground">
-      <a 
-        href="#main" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded-lg focus:font-medium"
-      >
-        Skip to content
-      </a>
-      <Header />
-      <main id="main" className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-        {children}
-      </main>
-      <Footer />
-    </div>
+    <PasswordGate>
+      <div className="min-h-dvh flex flex-col bg-background text-foreground">
+        <a 
+          href="#main" 
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-primary focus:text-primary-foreground focus:px-4 focus:py-2 focus:rounded-lg focus:font-medium"
+        >
+          Skip to content
+        </a>
+        <Header />
+        <main id="main" className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+          {children}
+        </main>
+        <Footer />
+      </div>
+    </PasswordGate>
   );
 }
 

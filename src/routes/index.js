@@ -3,10 +3,35 @@ const fs = require('fs').promises;
 const path = require('path');
 const router = express.Router();
 
-// Path to contributions file
-const CONTRIBUTIONS_FILE = path.join(process.cwd(), 'contributions.json');
+// Path to data files
+const DATA_DIR = path.join(process.cwd(), 'data');
+const SCHOLARSHIPS_FILE = path.join(DATA_DIR, 'scholarships.json');
+const CONTRIBUTIONS_FILE = path.join(DATA_DIR, 'contributions.json');
 
 // Helper functions for file operations
+async function readScholarships() {
+  try {
+    const data = await fs.readFile(SCHOLARSHIPS_FILE, 'utf8');
+    return JSON.parse(data);
+  } catch (error) {
+    if (error.code === 'ENOENT') {
+      console.error('Scholarships file not found');
+      return [];
+    }
+    console.error('Error reading scholarships:', error);
+    throw error;
+  }
+}
+
+async function writeScholarships(scholarships) {
+  try {
+    await fs.writeFile(SCHOLARSHIPS_FILE, JSON.stringify(scholarships, null, 2));
+  } catch (error) {
+    console.error('Error writing scholarships:', error);
+    throw error;
+  }
+}
+
 async function readContributions() {
   try {
     const data = await fs.readFile(CONTRIBUTIONS_FILE, 'utf8');
@@ -30,53 +55,12 @@ async function writeContributions(contributions) {
   }
 }
 
-// Initialize with sample data if file is empty
+// Initialize contributions file if it doesn't exist
 async function initializeContributions() {
   try {
-    const contributions = await readContributions();
-    if (contributions.length === 0) {
-      const sampleContributions = [
-        {
-          id: 1,
-          scholarshipName: 'Sample Scholarship',
-          organization: 'Sample University',
-          website: 'https://example.com',
-          level: "Bachelor's",
-          hostCountry: 'USA',
-          targetGroup: 'All Students',
-          deadline: '2024-12-31',
-          fundingType: 'Yes',
-          fundingDetails: 'Full tuition coverage',
-          eligibility: 'Must have high GPA',
-          applicationProcess: 'Apply online',
-          additionalNotes: 'This is a sample scholarship for demo purposes',
-          submitterName: 'John Doe',
-          submitterEmail: 'john@example.com',
-          timestamp: new Date('2024-01-01'),
-          status: 'pending'
-        },
-        {
-          id: 2,
-          scholarshipName: 'Graduate Research Fellowship',
-          organization: 'Research Institute',
-          website: 'https://research.example.com',
-          level: "Master's",
-          hostCountry: 'Canada',
-          targetGroup: 'Graduate Students',
-          deadline: '2024-11-30',
-          fundingType: 'Partial',
-          fundingDetails: 'Covers tuition and stipend',
-          eligibility: 'Must be enrolled in research program',
-          applicationProcess: 'Submit proposal and transcripts',
-          additionalNotes: 'Focus on STEM fields',
-          submitterName: 'Jane Smith',
-          submitterEmail: 'jane@example.com',
-          timestamp: new Date('2024-01-15'),
-          status: 'approved'
-        }
-      ];
-      await writeContributions(sampleContributions);
-    }
+    // Just check if file exists and is readable
+    await readContributions();
+    console.log('Contributions file ready');
   } catch (error) {
     console.error('Error initializing contributions:', error);
   }
@@ -84,129 +68,6 @@ async function initializeContributions() {
 
 // Initialize contributions on startup
 initializeContributions();
-
-// Mock data for scholarships
-const mockScholarships = [
-  {
-    id: 1,
-    name: 'University of the People Afghan Women\'s Fund',
-    organization: 'University of the People (UoPeople)',
-    hostCountry: 'Online',
-    region: 'Online',
-    targetGroup: 'Afghan Women',
-    level: ['Bachelor\'s'],
-    deadline: 'Ongoing (apply for admission first)',
-    funding: 'Yes',
-    fundingDetails: 'Full tuition coverage. UoPeople is tuition-free but has assessment fees per course, which this scholarship covers.',
-    returnHome: 'No',
-    website: 'https://www.uopeople.edu/tuition-free/our-scholarships/afghan-womens-scholarship-fund/',
-    notes: 'This is a highly accessible option as it is online and specifically targets Afghan women.',
-    eligibility: 'Must be a female Afghan citizen, demonstrate financial need, and gain admission to UoPeople.',
-    applicationProcess: '1. Apply for admission to UoPeople. 2. Once accepted, request the scholarship via the student portal.'
-  },
-  {
-    id: 2,
-    name: 'UNHCR DAFI Scholarship Programme',
-    organization: 'UNHCR',
-    hostCountry: 'Various',
-    region: 'Global',
-    targetGroup: 'Refugees',
-    level: ['Bachelor\'s'],
-    deadline: 'Varies by country',
-    funding: 'Yes',
-    fundingDetails: 'Covers tuition, living allowance, and other study-related costs.',
-    returnHome: 'No',
-    website: 'https://www.unhcr.org/dafi-scholarships',
-    notes: 'Available in multiple countries for refugee students.',
-    eligibility: 'Must be a recognized refugee under UNHCR mandate.',
-    applicationProcess: 'Apply through UNHCR field offices in host countries.'
-  },
-  {
-    id: 3,
-    name: 'World University Service of Canada (WUSC) Student Refugee Program',
-    organization: 'WUSC',
-    hostCountry: 'Canada',
-    region: 'North America',
-    targetGroup: 'Refugees',
-    level: ['Bachelor\'s'],
-    deadline: 'January 15 annually',
-    funding: 'Yes',
-    fundingDetails: 'Full sponsorship including tuition, accommodation, and living expenses.',
-    returnHome: 'No',
-    website: 'https://wusc.ca/programs/student-refugee-program/',
-    notes: 'Comprehensive support program with community sponsorship.',
-    eligibility: 'Must be a refugee between 18-24 years old with strong academic record.',
-    applicationProcess: 'Apply through UNHCR referral system.'
-  },
-  {
-    id: 4,
-    name: 'Mastercard Foundation Scholars Program',
-    organization: 'Mastercard Foundation',
-    hostCountry: 'Various (Africa & North America)',
-    region: 'Africa/North America',
-    targetGroup: 'Young Africans',
-    level: ['Bachelor\'s', 'Master\'s'],
-    deadline: 'Varies by partner university',
-    funding: 'Yes',
-    fundingDetails: 'Comprehensive scholarship covering tuition, accommodation, books, and living expenses.',
-    returnHome: 'Yes',
-    website: 'https://mastercardfdn.org/all/scholars/',
-    notes: 'Focus on developing leadership skills and giving back to Africa.',
-    eligibility: 'African citizens with demonstrated financial need and academic excellence.',
-    applicationProcess: 'Apply directly to partner universities offering the program.'
-  },
-  {
-    id: 5,
-    name: 'Open Society Foundations Scholarships',
-    organization: 'Open Society Foundations',
-    hostCountry: 'Various',
-    region: 'Global',
-    targetGroup: 'Underrepresented groups',
-    level: ['Master\'s', 'PhD'],
-    deadline: 'Varies by program',
-    funding: 'Yes',
-    fundingDetails: 'Full funding including tuition, living expenses, and travel costs.',
-    returnHome: 'Encouraged',
-    website: 'https://www.opensocietyfoundations.org/grants/scholarships',
-    notes: 'Multiple programs targeting different regions and groups.',
-    eligibility: 'Varies by specific program, generally for marginalized communities.',
-    applicationProcess: 'Apply through specific program websites.'
-  },
-  {
-    id: 6,
-    name: 'Fulbright Foreign Student Program',
-    organization: 'U.S. Department of State',
-    hostCountry: 'United States',
-    region: 'North America',
-    targetGroup: 'International Students',
-    level: ['Master\'s', 'PhD'],
-    deadline: 'Varies by country (typically February-October)',
-    funding: 'Yes',
-    fundingDetails: 'Full funding including tuition, living stipend, health insurance, and travel costs.',
-    returnHome: 'Yes',
-    website: 'https://foreign.fulbrightonline.org/',
-    notes: 'Prestigious program with strong alumni network.',
-    eligibility: 'Varies by country; generally requires bachelor\'s degree and English proficiency.',
-    applicationProcess: 'Apply through Fulbright Commission in home country.'
-  },
-  {
-    id: 7,
-    name: 'Kailash Satyarthi Children\'s Foundation Scholarship',
-    organization: 'Kailash Satyarthi Children\'s Foundation',
-    hostCountry: 'India',
-    region: 'Asia',
-    targetGroup: 'Disadvantaged Children',
-    level: ['High School', 'Bachelor\'s'],
-    deadline: 'Ongoing applications',
-    funding: 'Partial',
-    fundingDetails: 'Educational support, books, and some living expenses.',
-    returnHome: 'No',
-    website: 'https://satyarthi.org.in/our-work/education/',
-    notes: 'Focus on child rights and education for marginalized communities.',
-    eligibility: 'Children from disadvantaged backgrounds in India.',
-    applicationProcess: 'Contact foundation directly or through partner organizations.'
-  }
-];
 
 // Helper function to convert contribution to scholarship format
 function convertContributionToScholarship(contribution) {
@@ -245,19 +106,138 @@ function getRegionFromCountry(country) {
   }
 }
 
-// API Routes
+// Helper function to get all scholarships
+async function getAllScholarships() {
+  const scholarships = await readScholarships();
+  const contributions = await readContributions();
+  const approvedContributions = contributions
+    .filter(contribution => contribution.status === 'approved')
+    .map(convertContributionToScholarship);
+  return [...scholarships, ...approvedContributions];
+}
+
+// API Routes - IMPORTANT: Put specific routes before parameterized routes
+
+// Search scholarships (must be before :id route)
+router.get('/api/scholarships/search', async (req, res) => {
+  try {
+    const { q } = req.query;
+    
+    if (!q || q.trim() === '') {
+      return res.status(400).json({ message: 'Search query is required', success: false });
+    }
+    
+    const searchTerm = q.toLowerCase().trim();
+    const allScholarships = await getAllScholarships();
+    
+    // Search in name, organization, targetGroup, hostCountry, eligibility, notes
+    const results = allScholarships.filter(s => {
+      return (
+        s.name?.toLowerCase().includes(searchTerm) ||
+        s.organization?.toLowerCase().includes(searchTerm) ||
+        s.targetGroup?.toLowerCase().includes(searchTerm) ||
+        s.hostCountry?.toLowerCase().includes(searchTerm) ||
+        s.eligibility?.toLowerCase().includes(searchTerm) ||
+        s.notes?.toLowerCase().includes(searchTerm) ||
+        s.fundingDetails?.toLowerCase().includes(searchTerm)
+      );
+    });
+    
+    console.log(`Search for "${q}" returned ${results.length} results`);
+    res.json(results);
+  } catch (error) {
+    console.error('Error searching scholarships:', error);
+    res.status(500).json({ message: 'Error searching scholarships', error: error.message });
+  }
+});
+
+// Filter scholarships (must be before :id route)
+router.get('/api/scholarships/filter', async (req, res) => {
+  try {
+    const { level, region, funding, targetGroup, hostCountry } = req.query;
+    
+    let results = await getAllScholarships();
+    
+    // Apply filters
+    if (level && level !== 'all') {
+      results = results.filter(s => {
+        const levels = Array.isArray(s.level) ? s.level : [s.level];
+        return levels.some(l => l?.toLowerCase().includes(level.toLowerCase()));
+      });
+    }
+    
+    if (region && region !== 'all') {
+      results = results.filter(s => s.region?.toLowerCase() === region.toLowerCase());
+    }
+    
+    if (funding && funding !== 'all') {
+      results = results.filter(s => s.funding?.toLowerCase() === funding.toLowerCase());
+    }
+    
+    if (targetGroup && targetGroup !== 'all') {
+      results = results.filter(s => s.targetGroup?.toLowerCase().includes(targetGroup.toLowerCase()));
+    }
+    
+    if (hostCountry && hostCountry !== 'all') {
+      results = results.filter(s => s.hostCountry?.toLowerCase().includes(hostCountry.toLowerCase()));
+    }
+    
+    console.log(`Filter returned ${results.length} results`);
+    res.json(results);
+  } catch (error) {
+    console.error('Error filtering scholarships:', error);
+    res.status(500).json({ message: 'Error filtering scholarships', error: error.message });
+  }
+});
+
+// Get unique filter options (must be before :id route)
+router.get('/api/scholarships/filters/options', async (req, res) => {
+  try {
+    const allScholarships = await getAllScholarships();
+    
+    // Extract unique values for each filter
+    const levels = new Set();
+    const regions = new Set();
+    const funding = new Set();
+    const targetGroups = new Set();
+    const hostCountries = new Set();
+    
+    allScholarships.forEach(s => {
+      // Handle level which can be an array
+      if (Array.isArray(s.level)) {
+        s.level.forEach(l => levels.add(l));
+      } else if (s.level) {
+        levels.add(s.level);
+      }
+      
+      if (s.region) regions.add(s.region);
+      if (s.funding) funding.add(s.funding);
+      if (s.targetGroup) targetGroups.add(s.targetGroup);
+      if (s.hostCountry) hostCountries.add(s.hostCountry);
+    });
+    
+    res.json({
+      levels: Array.from(levels).sort(),
+      regions: Array.from(regions).sort(),
+      funding: Array.from(funding).sort(),
+      targetGroups: Array.from(targetGroups).sort(),
+      hostCountries: Array.from(hostCountries).sort()
+    });
+  } catch (error) {
+    console.error('Error fetching filter options:', error);
+    res.status(500).json({ message: 'Error fetching filter options', error: error.message });
+  }
+});
+
+// Get all scholarships
 router.get('/api/scholarships', async (req, res) => {
   try {
-    // Get approved contributions and convert them to scholarship format
+    const allScholarships = await getAllScholarships();
+    const scholarships = await readScholarships();
     const contributions = await readContributions();
-    const approvedContributions = contributions
-      .filter(contribution => contribution.status === 'approved')
-      .map(convertContributionToScholarship);
+    const approvedCount = contributions.filter(c => c.status === 'approved').length;
     
-    // Combine with mock scholarships for demonstration
-    const allScholarships = [...mockScholarships, ...approvedContributions];
-    
-    console.log(`Returning ${allScholarships.length} scholarships (${approvedContributions.length} approved contributions)`);
+    console.log(`Returning ${allScholarships.length} scholarships (${scholarships.length} base + ${approvedCount} approved contributions)`);
     res.json(allScholarships);
   } catch (error) {
     console.error('Error fetching scholarships:', error);
@@ -265,12 +245,14 @@ router.get('/api/scholarships', async (req, res) => {
   }
 });
 
+// Get single scholarship (parameterized route - must be after specific routes)
 router.get('/api/scholarships/:id', async (req, res) => {
   try {
     const scholarshipId = parseInt(req.params.id);
     
-    // Check in mock scholarships first
-    let scholarship = mockScholarships.find(s => s.id === scholarshipId);
+    // Check in base scholarships first
+    const scholarships = await readScholarships();
+    let scholarship = scholarships.find(s => s.id === scholarshipId);
     
     // If not found, check in approved contributions
     if (!scholarship) {
@@ -289,6 +271,108 @@ router.get('/api/scholarships/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching scholarship:', error);
     res.status(500).json({ message: 'Error fetching scholarship', error: error.message });
+  }
+});
+
+// PUT /api/scholarships/:id - Update a scholarship
+router.put('/api/scholarships/:id', async (req, res) => {
+  try {
+    const scholarshipId = parseInt(req.params.id);
+    const updates = req.body;
+    
+    const scholarships = await readScholarships();
+    const index = scholarships.findIndex(s => s.id === scholarshipId);
+    
+    if (index === -1) {
+      return res.status(404).json({ message: 'Scholarship not found', success: false });
+    }
+    
+    // Update scholarship while preserving the id
+    scholarships[index] = {
+      ...scholarships[index],
+      ...updates,
+      id: scholarshipId, // Preserve original ID
+      updatedAt: new Date().toISOString()
+    };
+    
+    await writeScholarships(scholarships);
+    console.log(`Scholarship ${scholarshipId} updated`);
+    
+    res.json({ 
+      message: 'Scholarship updated successfully', 
+      success: true, 
+      scholarship: scholarships[index] 
+    });
+  } catch (error) {
+    console.error('Error updating scholarship:', error);
+    res.status(500).json({ message: 'Error updating scholarship', success: false, error: error.message });
+  }
+});
+
+// DELETE /api/scholarships/:id - Delete a scholarship
+router.delete('/api/scholarships/:id', async (req, res) => {
+  try {
+    const scholarshipId = parseInt(req.params.id);
+    
+    const scholarships = await readScholarships();
+    const index = scholarships.findIndex(s => s.id === scholarshipId);
+    
+    if (index === -1) {
+      return res.status(404).json({ message: 'Scholarship not found', success: false });
+    }
+    
+    const deletedScholarship = scholarships[index];
+    scholarships.splice(index, 1);
+    await writeScholarships(scholarships);
+    
+    console.log(`Scholarship ${scholarshipId} deleted: ${deletedScholarship.name}`);
+    
+    res.json({ 
+      message: 'Scholarship deleted successfully', 
+      success: true 
+    });
+  } catch (error) {
+    console.error('Error deleting scholarship:', error);
+    res.status(500).json({ message: 'Error deleting scholarship', success: false, error: error.message });
+  }
+});
+
+// POST /api/scholarships - Create a new scholarship (admin)
+router.post('/api/scholarships', async (req, res) => {
+  try {
+    const scholarshipData = req.body;
+    
+    // Basic validation
+    if (!scholarshipData.name || !scholarshipData.organization || !scholarshipData.website) {
+      return res.status(400).json({ 
+        message: 'Name, organization, and website are required', 
+        success: false 
+      });
+    }
+    
+    const scholarships = await readScholarships();
+    
+    // Generate new ID (max ID + 1)
+    const maxId = scholarships.reduce((max, s) => Math.max(max, s.id || 0), 0);
+    const newScholarship = {
+      id: maxId + 1,
+      ...scholarshipData,
+      createdAt: new Date().toISOString()
+    };
+    
+    scholarships.push(newScholarship);
+    await writeScholarships(scholarships);
+    
+    console.log(`New scholarship created: ${newScholarship.name}`);
+    
+    res.status(201).json({ 
+      message: 'Scholarship created successfully', 
+      success: true, 
+      scholarship: newScholarship 
+    });
+  } catch (error) {
+    console.error('Error creating scholarship:', error);
+    res.status(500).json({ message: 'Error creating scholarship', success: false, error: error.message });
   }
 });
 
@@ -493,6 +577,96 @@ router.post('/api/remove-scholarship', async (req, res) => {
   } catch (error) {
     console.error('Error removing scholarship:', error);
     res.status(500).json({ message: 'Error removing scholarship', success: false, error: error.message });
+  }
+});
+
+// PUT /api/contributions/:id - Edit a submission
+router.put('/api/contributions/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+    const contributions = await readContributions();
+    const index = contributions.findIndex(c => c.id == id);
+    
+    if (index === -1) {
+      return res.status(404).json({ message: 'Contribution not found', success: false });
+    }
+    
+    // Preserve id, timestamp, and update the rest
+    contributions[index] = {
+      ...contributions[index],
+      ...updates,
+      id: contributions[index].id,
+      timestamp: contributions[index].timestamp,
+      updatedAt: new Date()
+    };
+    
+    await writeContributions(contributions);
+    console.log(`Contribution ${id} updated`);
+    res.json({ message: 'Contribution updated successfully', success: true, contribution: contributions[index] });
+  } catch (error) {
+    console.error('Error updating contribution:', error);
+    res.status(500).json({ message: 'Error updating contribution', success: false, error: error.message });
+  }
+});
+
+// DELETE /api/contributions/:id - Permanently delete a submission
+router.delete('/api/contributions/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const contributions = await readContributions();
+    const index = contributions.findIndex(c => c.id == id);
+    
+    if (index === -1) {
+      return res.status(404).json({ message: 'Contribution not found', success: false });
+    }
+    
+    contributions.splice(index, 1);
+    await writeContributions(contributions);
+    console.log(`Contribution ${id} permanently deleted`);
+    res.json({ message: 'Contribution deleted successfully', success: true });
+  } catch (error) {
+    console.error('Error deleting contribution:', error);
+    res.status(500).json({ message: 'Error deleting contribution', success: false, error: error.message });
+  }
+});
+
+// POST /api/contributions/:id/pending - Set submission back to pending
+router.post('/api/contributions/:id/pending', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const contributions = await readContributions();
+    const contribution = contributions.find(c => c.id == id);
+    
+    if (!contribution) {
+      return res.status(404).json({ message: 'Contribution not found', success: false });
+    }
+    
+    contribution.status = 'pending';
+    await writeContributions(contributions);
+    console.log(`Contribution ${id} set back to pending`);
+    res.json({ message: 'Contribution set to pending successfully', success: true });
+  } catch (error) {
+    console.error('Error setting contribution to pending:', error);
+    res.status(500).json({ message: 'Error setting contribution to pending', success: false, error: error.message });
+  }
+});
+
+// GET /api/contributions/:id - Get a single contribution
+router.get('/api/contributions/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const contributions = await readContributions();
+    const contribution = contributions.find(c => c.id == id);
+    
+    if (!contribution) {
+      return res.status(404).json({ message: 'Contribution not found', success: false });
+    }
+    
+    res.json(contribution);
+  } catch (error) {
+    console.error('Error fetching contribution:', error);
+    res.status(500).json({ message: 'Error fetching contribution', success: false, error: error.message });
   }
 });
 

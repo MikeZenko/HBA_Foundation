@@ -71,6 +71,25 @@
     z-index: 1;
 }
 
+/* ===== REFINED HERO/WELCOME ACCENTS ===== */
+.welcome-section .gradient-underline {
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #3A5A40, #008080);
+    border-radius: 9999px;
+}
+
+.welcome-content p {
+    font-size: 1.1rem;
+}
+
+@media (min-width: 768px) {
+    .welcome-content p {
+        font-size: 1.125rem;
+    }
+}
+
 /* ===== ENHANCED FORM STYLING ===== */
 .form-group input:hover,
 .form-group select:hover,

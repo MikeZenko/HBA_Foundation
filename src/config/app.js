@@ -2,12 +2,21 @@ require('dotenv').config();
 
 module.exports = {
   port: parseInt(process.env.PORT || '3000', 10),
-  host: process.env.HOST || 'localhost',
+  host: process.env.HOST || '0.0.0.0',
   nodeEnv: process.env.NODE_ENV || 'development',
   
   cors: {
-    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:3000', 'http://localhost:5173'],
+    origin: process.env.CORS_ORIGIN?.split(',') || [
+      'http://localhost:3000', 
+      'http://localhost:3001',
+      'http://localhost:5173',
+      'https://web-mikezenkos-projects.vercel.app',
+      'https://web-bli6sdzi0-mikezenkos-projects.vercel.app',
+      'https://web-1bnz42jrm-mikezenkos-projects.vercel.app'
+    ],
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
   },
   
   rateLimit: {

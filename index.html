@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css?v=1750385251">
+    <link rel="stylesheet" href="public/css/override.css?v=1750385251">
     <style>
         /* Passcode Protection Overlay - Modern Design */
         #passcode-overlay {
@@ -148,8 +149,9 @@
         <header class="mb-8 py-10">
             <div class="container mx-auto px-4">
                 <div class="max-w-3xl">
-                    <h1 class="font-extrabold mb-2">HBA Foundation</h1>
-                    <p class="text-gray-600">
+                    <h1 class="font-extrabold mb-2 animate-fade-in">HBA Foundation</h1>
+                    <div class="w-20 h-1 bg-gradient-to-r from-[#3A5A40] to-[#008080] rounded-full"></div>
+                    <p class="text-gray-600 animate-slide-up">
                         Pathways to Global Learning — a curated, interactive guide to scholarships and opportunities for Afghan students.
                     </p>
                     <div class="flex items-center gap-3 mt-6">
@@ -161,12 +163,13 @@
         </header>
 
         <main>
-            <section id="welcome" class="welcome-section py-10">
+            <section id="welcome" class="welcome-section py-16 bg-gradient-to-b from-[#F5F5F5] to-white">
                 <div class="container mx-auto px-4">
-                    <div class="mb-4">
-                        <h2 class="font-bold">Welcome</h2>
+                    <div class="text-left mb-8 animate-fade-in">
+                        <h2 class="text-3xl md:text-4xl font-bold text-[#3A5A40] mb-2">Welcome</h2>
+                        <div class="w-16 h-1 bg-gradient-to-r from-[#3A5A40] to-[#008080] rounded-full"></div>
                     </div>
-                    <div class="max-w-3xl space-y-4">
+                    <div class="max-w-3xl space-y-6 welcome-content animate-slide-up">
                         <p class="text-gray-700 leading-relaxed">
                             The pursuit of education is a journey of empowerment and hope. In the face of challenges, your desire for learning remains a powerful force. This guide is a beacon of support, designed to illuminate potential pathways to international higher education.
                         </p>
